@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Model Suggestion</title>
+
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: inline-block; /* To center the form */
+        }
+
+        input[type="file"],
+        input[type="text"],
+        input[type="submit"] {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="file"] {
+            width: auto; /* Reset width for file input */
+            display: inline-block; /* To center the file input */
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #results {
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>ML Model Suggestor</h1>
+    <form action="/" method="post" enctype="multipart/form-data" id="upload-form">
+        <label for="file">Upload CSV File:</label>
+        <br>
+        <input type="file" name="file" id="file" accept=".csv" required>
+        <br>
+        <label for="target_column">Target Column:</label>
+        <br>
+        <input type="text" name="target_column" id="target_column" required>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <div id="results"></div>
+
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var formData = new FormData(this);
+
+            fetch('/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('results').innerHTML = data.results;
+            });
+        });
+    </script>
+</body>
+</html>
